@@ -1,7 +1,7 @@
 import 'package:app/screens/done_list_screen/marked_home_page.dart';
 import 'package:app/screens/todo_list_screen/my_home_page.dart'
 import 'package:flutter/material.dart'
-import 'package:flutter_riverpod/flutter_riverpod.dart'
+import 'package:flutter_riverpod/flutter_riverpod.dart
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
