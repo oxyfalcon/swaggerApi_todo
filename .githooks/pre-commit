@@ -1,0 +1,56 @@
+#!/bin/bash
+
+
+# # Run Flutter tests
+# flutter test
+
+
+# # Run Flutter analyze for static analysis
+# flutter analyze
+
+
+# # Run Dart format to ensure code formatting
+# dart format --set-exit-if-changed .
+
+
+# # Run Dartdoc to check for missing or outdated documentation
+# dartdoc --dry-run
+
+# # If any of the commands fail, exit with a non-zero status
+# status=$?
+# if [ $status -ne 0 ]; then
+#   echo "Code checks or build process failed. Please fix the issues before committing."
+#   exit $status
+# fi
+
+if ! output=$(flutter analyze); then
+    echo "COMMIT REJECTED: Flutter analyze found the following errors:"
+    echo "$output"
+    exit 1
+fi
+
+# Run Dart analyze and check for errors
+if ! output=$(dart analyze); then
+    echo "COMMIT REJECTED: Dart analyze found the following errors:"
+    echo "$output"
+    exit 1
+fi
+
+# Run Dart format and check for formatting issues
+if ! output=$(dart format -o none --set-exit-if-changed .); then
+    echo "COMMIT REJECTED: Dart analyze found the following errors:"
+    echo "$output"
+    exit 1
+fi
+
+# Run Dart analyze and check for errors
+if ! output=$(flutter test); then
+    echo "COMMIT REJECTED: Flutter test has the following errors:"
+    echo "$output"
+    exit 1l
+fi
+
+
+
+# If all checks pass, allow the commit
+exit 0
